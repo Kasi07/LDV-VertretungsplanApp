@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "S:\\Stundenplaner\\Stundenplaner2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-sw360dp-v13\\values-sw360dp-v13.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Jonas\\.gradle\\caches\\transforms-2\\files-2.1\\4f86562cf5d99a0215c2fa7d6a651319\\preference-1.1.0\\res\\values-sw360dp-v13\\values-sw360dp-v13.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "71",
+                        "endOffsets": "122"
+                    }
+                }
+            ]
+        }
+    ]
+}
