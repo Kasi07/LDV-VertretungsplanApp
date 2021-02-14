@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -16,6 +19,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -35,6 +39,7 @@ import static dde.gymnasiumnippes.vertretungsplan.MainActivity.currentname;
 import static dde.gymnasiumnippes.vertretungsplan.MainActivity.namen;
 
 public class StundenplanActivity extends AppCompatActivity {
+
     SharedPreferences pref;
     Schueler meinSchueler;
     Datum Datum;
@@ -46,12 +51,16 @@ public class StundenplanActivity extends AppCompatActivity {
     Button naechsteWoche;
     Button dieseWoche;
     Button aktualisieren;
+    Toast toast1;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         super.onCreate(savedInstanceState);
+        toast1 = new Toast(getApplicationContext());
         setContentView(R.layout.stundenplan_activity);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,6 +69,9 @@ public class StundenplanActivity extends AppCompatActivity {
         dieseWoche = findViewById(R.id.dieseWocheAnzeigen);
         aktualisieren = findViewById(R.id.websiteAktualisieren);
         Datum = new Datum();
+
+        toast1 = new Toast(this.getBaseContext());
+        customToast("", toast1);
 
         if (Datum.getKalenderwoche() <10)
         {
@@ -71,39 +83,6 @@ public class StundenplanActivity extends AppCompatActivity {
 
         meinSchueler = new Schueler();
         Websiteneuladen();
-        StyleableToast Wochenanzeige = null;
-        aktualisieren.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Websiteneuladen();
-                Wochenanzeige.makeText(getBaseContext(), "Seite wird aktualisiert", R.style.mytoast).show();
-            }
-        });
-        dieseWoche.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Datum = new Datum();
-                kalenderwochejetzt = Integer.toString(Datum.getKalenderwoche() );
-                meinSchueler = new Schueler();
-                Websiteneuladen();
-                Wochenanzeige.makeText(getBaseContext(), "JETZIGE WOCHE WIRD ANGEZEIGT", R.style.mytoast).show();
-                dieseWoche.setVisibility(View.INVISIBLE);
-                naechsteWoche.setVisibility(View.VISIBLE);
-            }
-        });
-        naechsteWoche.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Datum = new Datum();
-                kalenderwochejetzt = Integer.toString(Datum.getKalenderwoche() + 1);
-                meinSchueler = new Schueler();
-                Websiteneuladen();
-                Wochenanzeige.makeText(getBaseContext(), "NÄCHSTE WOCHE WIRD ANGEZEIGT", R.style.mytoast).show();
-
-                dieseWoche.setVisibility(View.VISIBLE);
-                naechsteWoche.setVisibility(View.INVISIBLE);
-            }
-        });
     }
 
 
@@ -135,9 +114,15 @@ public class StundenplanActivity extends AppCompatActivity {
                 }
                 meinSchueler = new Schueler();
                 Websiteneuladen();
-                StyleableToast.makeText(this, "NÄCHSTE WOCHE WIRD ANGEZEIGT", R.style.mytoast).show();
-                pfeil.setVisible(true);
+
+                if(toast1.getView().getWindowVisibility() == View.VISIBLE){
+                    toast1.cancel();
+                }
+                customToast("Nächste Woche wird angezeigt", toast1);
+                toast1.show();
+
                 pfeil2.setVisible(false);
+                pfeil.setVisible(true);
                 return true;
 
             case R.id.letzteWoche:
@@ -149,18 +134,31 @@ public class StundenplanActivity extends AppCompatActivity {
                     kalenderwochejetzt = Integer.toString(Datum.getKalenderwoche());
                 }
                 Websiteneuladen();
-                StyleableToast.makeText(this, "JETZIGE WOCHE WIRD ANGEZEIGT", R.style.mytoast).show();
-                pfeil2.setVisible(true);
+
+                if(toast1.getView().getWindowVisibility() == View.VISIBLE){
+                    toast1.cancel();
+                }
+                customToast("Jetzige Woche wird angezeigt", toast1);
+                toast1.show();
+
                 pfeil.setVisible(false);
+                pfeil2.setVisible(true);
                 return true;
 
             case R.id.websiteAktualisieren:
                 Websiteneuladen();
-                StyleableToast.makeText(this, "Seite wird aktualisiert", R.style.mytoast).show();
+
+                if(toast1.getView().getWindowVisibility() == View.VISIBLE){
+                    toast1.cancel();
+                }
+                customToast("Seite wird aktualisiert", toast1);
+                toast1.show();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }}
+        }
+    }
 
 
 
@@ -213,6 +211,21 @@ public class StundenplanActivity extends AppCompatActivity {
         }
     };
 
+
+    public void customToast(String toastText, Toast toast){
+        ViewGroup vGroup = findViewById((R.id.custom_toast1));
+
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, vGroup);
+
+        TextView tView = layout.findViewById(R.id.tView);
+        tView.setText(toastText);
+
+        // toast = new Toast(getBaseContext());
+        toast.setGravity(Gravity.CENTER | Gravity.BOTTOM, 0, 50);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+    }
 
     //TODO junge du kleiner Lappen lern jetzt mal wie jsoup geht damit du die html datei kriegen kannst
    /* private void getWebsite() {

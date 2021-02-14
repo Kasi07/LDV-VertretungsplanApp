@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -37,17 +40,18 @@ public class MainActivity extends AppCompatActivity {
     }; // Namen aller Schueler
     public static String currentname;
     private long backPressedTime;
-    private StyleableToast backToast;
     private AutoCompleteTextView NamenText;
-    private StyleableToast toast1 = null;
+    private Toast toast2;
     private CheckBox remember1;
     private TextView name1;
-    private String gespeicherterName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toast2 = new Toast(this.getApplicationContext());
+        customToast("", toast2);
 
         NamenText = findViewById(R.id.autoCompleteTextView);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, namen);
@@ -83,11 +87,11 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(MainActivity.this, StundenplanActivity.class);
             startActivity(i);
         } else {
-            if (toast1 != null) {
-                toast1.cancel();
-            } else {
-                toast1.makeText(this, "Bitte gebe einen richtigen Namen ein", R.style.mytoast).show();
+            if (toast2.getView().getWindowVisibility() == View.VISIBLE) {
+                toast2.cancel();
             }
+            customToast("Bitte gebe einen richtigen Namen ein", toast2);
+            toast2.show();
         }
 
     }
@@ -98,14 +102,28 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (backPressedTime + 3000 > System.currentTimeMillis()) {
-            backToast.cancel();
+            toast2.cancel();
             super.onBackPressed();
             return;
         } else {
-            backToast.makeText(getBaseContext(), "Drücken Sie zum Beenden erneut zurück", R.style.mytoast).show();
+            customToast("Drücken Sie zum Beenden erneut zurück", toast2);
         }
         backPressedTime = System.currentTimeMillis();
     }
 
+    public void customToast(String toastText, Toast toast){
+        ViewGroup vGroup = findViewById((R.id.custom_toast1));
+
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, vGroup);
+
+        TextView tView = layout.findViewById(R.id.tView);
+        tView.setText(toastText);
+
+        // toast = new Toast(getBaseContext());
+        toast.setGravity(Gravity.CENTER | Gravity.BOTTOM, 0, 50);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+    }
 
 }

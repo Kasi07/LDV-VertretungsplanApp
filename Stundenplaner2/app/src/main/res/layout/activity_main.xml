@@ -26,17 +26,17 @@
 
     <TextView
         android:id="@+id/credits"
-        android:layout_width="383dp"
+        android:layout_width="wrap_content"
         android:layout_height="26dp"
         android:fontFamily="@font/regular1"
-        android:text="Made by Simon Jakobs and Jonas Dunkel"
+        android:text="Made by Simon Jakobs, Jonas Dunkel and Kasimir Weilandt"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.178"
+        app:layout_constraintHorizontal_bias="0.016"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.992" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/redirect"

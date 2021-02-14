@@ -1276,6 +1276,7 @@ id coordinator
 id credits
 id custom
 id customPanel
+id custom_toast1
 id decor_content_parent
 id default_activity_button
 id design_bottom_sheet
@@ -1406,6 +1407,7 @@ id stretch
 id submenuarrow
 id submit_area
 id switchWidget
+id tView
 id tabMode
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
@@ -1509,6 +1511,7 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_main
 layout custom_dialog
+layout custom_toast
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
 layout design_layout_snackbar

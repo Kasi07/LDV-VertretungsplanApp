@@ -1,2 +1,2 @@
 # LDV-VertretungsplanApp
-THIS IS A TEST
+This is an App for the schedule of the LDV in Cologne.
