@@ -1,7 +1,0 @@
-#Sun Feb 14 22:08:50 CET 2021
-base.0=C\:\\Projects\\GitHub\\LDV-VertretungsplanApp\\Stundenplaner2\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
-path.1=classes.dex
-renamed.1=classes2.dex
-path.0=classes.dex
-renamed.0=classes.dex
-base.1=C\:\\Projects\\GitHub\\LDV-VertretungsplanApp\\Stundenplaner2\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\classes.dex
