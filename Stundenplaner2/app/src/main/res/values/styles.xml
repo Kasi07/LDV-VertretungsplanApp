@@ -1,0 +1,44 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme1" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme2" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/blue</item>
+    </style>
+
+    <style name="mytoast">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">#FFFFFF</item>
+        <item name="stFont">@font/bold11</item>
+        <item name="stTextSize">14dp</item>
+        <item name="stColorBackground">@color/blue</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">#000000</item>
+        <item name="stLength">SHORT</item>
+        <item name="stRadius">5dp</item>
+    </style>
+    <style name="toolbarstyle" parent="Theme.AppCompat">
+        <item name="titleTextAppearance"> @color/white</item>
+
+
+    </style>
+</resources>
