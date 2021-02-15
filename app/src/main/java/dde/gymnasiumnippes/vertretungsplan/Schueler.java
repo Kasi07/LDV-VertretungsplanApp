@@ -11,10 +11,10 @@ public class Schueler {
         for (int i = 0; i < 316; i++) {
             String b = Integer.toString(i + 1);
             if (i + 1 < 10) {
-                b = "00" + Integer.toString(i + 1);
+                b = "00" + (i + 1);
             }
             if (i + 1 < 100 && i + 1 > 9) {
-                b = "0" + Integer.toString(i + 1);
+                b = "0" + (i + 1);
             }
             Schuelerid[i] = "s00" + b;
         }

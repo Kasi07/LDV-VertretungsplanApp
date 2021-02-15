@@ -9,7 +9,7 @@ import android.view.WindowManager;
 
 
 public class SplashActivity extends AppCompatActivity {
-    private static int splashscreen_timeout = 1000;
+    private static final int splashscreen_timeout = 1000;
 
 
     @Override

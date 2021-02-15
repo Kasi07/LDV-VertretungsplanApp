@@ -107,7 +107,7 @@ public class StundenplanActivity extends AppCompatActivity {
                 Datum = new Datum();
                 if (Datum.getKalenderwoche() <10)
                 {
-                    kalenderwochejetzt = "0" + Integer.toString(Datum.getKalenderwoche()+1);
+                    kalenderwochejetzt = "0" + (Datum.getKalenderwoche() + 1);
                 }
                 else{
                     kalenderwochejetzt = Integer.toString(Datum.getKalenderwoche()+1);
@@ -172,7 +172,7 @@ public class StundenplanActivity extends AppCompatActivity {
                 .appendPath(kalenderwochejetzt)
                 .appendPath("s")
                 .appendPath(meinSchueler.Schuelerid[Index]);
-        String url = (String) builder.toString() + ".htm";
+        String url = builder.toString() + ".htm";
 
         pref = getSharedPreferences("app", Context.MODE_PRIVATE);
         WebView webView = findViewById(R.id.webview);
