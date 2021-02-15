@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
         NamenText = findViewById(R.id.autoCompleteTextView);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, namen);
         NamenText.setAdapter(adapter);
-        redirect = (Button) findViewById(R.id.redirect);
-        remember1 = (CheckBox) findViewById(R.id.remember);
+        redirect = findViewById(R.id.redirect);
+        remember1 = findViewById(R.id.remember);
         name1 = findViewById(R.id.Name1);
         SharedPreferences pref = getSharedPreferences("Name",MODE_PRIVATE);
         name1.setText(pref.getString("Namen", null));
