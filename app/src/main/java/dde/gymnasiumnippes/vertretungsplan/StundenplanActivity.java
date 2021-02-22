@@ -107,10 +107,10 @@ public class StundenplanActivity extends AppCompatActivity {
                 Datum = new Datum();
                 if (Datum.getKalenderwoche() <10)
                 {
-                    kalenderwochejetzt = "0" + (Datum.getKalenderwoche() + 1);
+                    kalenderwochejetzt = "0" + (Datum.getKalenderwoche() );
                 }
                 else{
-                    kalenderwochejetzt = Integer.toString(Datum.getKalenderwoche()+1);
+                    kalenderwochejetzt = Integer.toString(Datum.getKalenderwoche());
                 }
                 meinSchueler = new Schueler();
                 Websiteneuladen();
