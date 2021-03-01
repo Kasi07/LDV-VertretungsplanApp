@@ -28,6 +28,7 @@ import com.muddzdev.styleabletoast.StyleableToast;
 
 import org.w3c.dom.Text;
 
+import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,10 +62,6 @@ public class MainActivity extends AppCompatActivity {
         name1 = findViewById(R.id.Name1);
         SharedPreferences pref = getSharedPreferences("Name",MODE_PRIVATE);
         name1.setText(pref.getString("Namen", null));
-
-
-
-
     }
 
 
@@ -107,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         } else {
             customToast("Drücken Sie zum Beenden erneut zurück", toast2);
+            toast2.show();
         }
         backPressedTime = System.currentTimeMillis();
     }
