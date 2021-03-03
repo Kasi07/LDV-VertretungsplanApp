@@ -1,8 +1,6 @@
 package dde.gymnasiumnippes.vertretungsplan;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,40 +9,39 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.muddzdev.styleabletoast.StyleableToast;
 
-import org.apache.http.client.ClientProtocolException;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Scanner;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import org.apache.commons.io.FileUtils;
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
 
 import static dde.gymnasiumnippes.vertretungsplan.MainActivity.currentname;
 import static dde.gymnasiumnippes.vertretungsplan.MainActivity.namen;
 
 public class StundenplanActivity extends AppCompatActivity {
 
-    SharedPreferences pref;
     Schueler meinSchueler;
     Datum Datum;
     int Index = Arrays.asList(namen).indexOf(currentname);
-    String kalenderwochejetzt;
     MenuItem pfeil;
     MenuItem pfeil2;
     MenuItem refresh;
@@ -53,7 +50,7 @@ public class StundenplanActivity extends AppCompatActivity {
     Button aktualisieren;
     Toast toast1;
 
-
+    private long websiteReloadTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,28 +67,22 @@ public class StundenplanActivity extends AppCompatActivity {
         aktualisieren = findViewById(R.id.websiteAktualisieren);
         Datum = new Datum();
 
+        // Create first toast so it can be canceled before the first toast message.
         toast1 = new Toast(this.getBaseContext());
         customToast("", toast1);
 
-        if (Datum.getKalenderwoche() <10)
-        {
-            kalenderwochejetzt = "0" + Datum.getKalenderwoche();
-        }
-        else{
-            kalenderwochejetzt = Integer.toString(Datum.getKalenderwoche());
-        }
-
         meinSchueler = new Schueler();
-        Websiteneuladen();
-    }
 
+        WebsiteLaden();
+        WebsiteZeigen(1);
+    }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-        pfeil = menu.findItem(R.id.letzteWoche);
+        pfeil = menu.findItem(R.id.jetzigeWoche);
         pfeil2 = menu.findItem(R.id.naechsteWoche);
         refresh = menu.findItem(R.id.websiteAktualisieren);
         pfeil.setVisible(false);
@@ -103,39 +94,10 @@ public class StundenplanActivity extends AppCompatActivity {
 
 
         switch (item.getItemId()) {
-            case R.id.naechsteWoche:
-                Datum = new Datum();
-                if (Datum.getKalenderwoche() <10)
-                {
-                    kalenderwochejetzt = "0" + (Datum.getKalenderwoche() );
-                }
-                else{
-                    kalenderwochejetzt = Integer.toString(Datum.getKalenderwoche());
-                }
-                meinSchueler = new Schueler();
-                Websiteneuladen();
+            case R.id.jetzigeWoche:
+                WebsiteZeigen(1);
 
-                if(toast1.getView().getWindowVisibility() == View.VISIBLE){
-                    toast1.cancel();
-                }
-                customToast("Nächste Woche wird angezeigt", toast1);
-                toast1.show();
-
-                pfeil2.setVisible(false);
-                pfeil.setVisible(true);
-                return true;
-
-            case R.id.letzteWoche:
-                if (Datum.getKalenderwoche() <10)
-                {
-                    kalenderwochejetzt = "0" + Datum.getKalenderwoche();
-                }
-                else{
-                    kalenderwochejetzt = Integer.toString(Datum.getKalenderwoche());
-                }
-                Websiteneuladen();
-
-                if(toast1.getView().getWindowVisibility() == View.VISIBLE){
+                if (toast1.getView().getWindowVisibility() == View.VISIBLE) {
                     toast1.cancel();
                 }
                 customToast("Jetzige Woche wird angezeigt", toast1);
@@ -145,10 +107,25 @@ public class StundenplanActivity extends AppCompatActivity {
                 pfeil2.setVisible(true);
                 return true;
 
-            case R.id.websiteAktualisieren:
-                Websiteneuladen();
+            case R.id.naechsteWoche:
+                meinSchueler = new Schueler();
+                WebsiteZeigen(2);
 
-                if(toast1.getView().getWindowVisibility() == View.VISIBLE){
+                if (toast1.getView().getWindowVisibility() == View.VISIBLE) {
+                    toast1.cancel();
+                }
+                customToast("Nächste Woche wird angezeigt", toast1);
+                toast1.show();
+
+                pfeil2.setVisible(false);
+                pfeil.setVisible(true);
+                return true;
+
+            case R.id.websiteAktualisieren:
+                WebsiteLaden();
+                WebsiteZeigen(3);
+
+                if (toast1.getView().getWindowVisibility() == View.VISIBLE) {
                     toast1.cancel();
                 }
                 customToast("Seite wird aktualisiert", toast1);
@@ -160,59 +137,122 @@ public class StundenplanActivity extends AppCompatActivity {
         }
     }
 
+    private int lastUrl;
 
-
-    public void Websiteneuladen() {
-
-        Uri.Builder builder = new Uri.Builder();
-        builder.scheme("https")
-                .authority("web.gymnasium-nippes.de")
-                .appendPath("~autolog")
-                .appendPath("schueler")
-                .appendPath(kalenderwochejetzt)
-                .appendPath("s")
-                .appendPath(meinSchueler.Schuelerid[Index]);
-        String url = builder.toString() + ".htm";
-
-        pref = getSharedPreferences("app", Context.MODE_PRIVATE);
+    public void WebsiteZeigen(int url) {
         WebView webView = findViewById(R.id.webview);
         WebSettings settings = webView.getSettings();
-        settings.setDefaultTextEncodingName("utf-8");
+        settings.setDisplayZoomControls(true);
+        settings.setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebViewClient(wvc);
-        webView.loadUrl(url);
+
+        String content = loadFile(url);
+
+        if (url != 3) {lastUrl = url;}
+
+        if (url == 1) {
+            webView.loadDataWithBaseURL(null, content, "text/html", "iso-8859-1", null);
+        } else if (url == 2) {
+            webView.loadDataWithBaseURL(null, content, "text/html", "iso-8859-1", null);
+        } else if (url == 3) {
+            WebsiteZeigen(lastUrl);
+        } else {
+            return;
+        }
     }
 
-    public WebViewClient wvc = new WebViewClient() {
+    FileInputStream fis = null;
+    Scanner scanner;
 
-        @SuppressWarnings("deprecation")
-        public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-            try {
-                final String acToken = "aG9sbGFuZDpmYXJmcm9taGhvbWU=";
-
-                OkHttpClient okHttpClient = new OkHttpClient();
-                Request request = new Request.Builder().url(url).addHeader("Authorization", "Basic " + acToken)
-                .addHeader("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.3")
-                        .build();
-
-                Response response = okHttpClient.newCall(request).execute();
-
-                return new WebResourceResponse(response.header("content-type", response.body().contentType().type()),
-                        response.header("content-encoding", "utf-8"),
-                        response.body().byteStream());
-
-
-            } catch (ClientProtocolException e) {
-                return null;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
+    private String loadFile(int type) {
+        try {
+            if (type == 1) {
+                fis = openFileInput("thisWeekFile.html");
+            } else if (type == 2) {
+                fis = openFileInput("nextWeekFile.html");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    };
+
+        scanner = new Scanner(fis);
+        scanner.useDelimiter("\\Z");
+        String content = scanner.next();
+        scanner.close();
+
+        return content;
+    }
+
+    private void WebsiteLaden() {
+        if (websiteReloadTime + 60000 <= System.currentTimeMillis() && isInternetAvailable()) {
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+
+                    // URL for the current Week
+                    String urlWeekNow = "https://web.gymnasium-nippes.de/~autolog/schueler/"
+                            + Datum.KalenderwocheJetztURL()
+                            + "/s/"
+                            + meinSchueler.Schuelerid[Index]
+                            + ".htm";
+                    // URL for the next Week
+                    String urlWeekNext = "https://web.gymnasium-nippes.de/~autolog/schueler/"
+                            + Datum.KalenderwocheNextURL()
+                            + "/s/"
+                            + meinSchueler.Schuelerid[Index]
+                            + ".htm";
+
+                    final String acToken = "aG9sbGFuZDpmYXJmcm9taGhvbWU=";
+                    Document docWeekNext;
 
 
-    public void customToast(String toastText, Toast toast){
+                    Document docWeekNow;
+                    try {
+                        docWeekNow = Jsoup.connect(urlWeekNow)
+                                .header("Authorization", "Basic " + acToken)
+                                .header("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.3")
+                                .get();
+
+                        FileOutputStream fileobj = openFileOutput("thisWeekFile.html", Context.MODE_PRIVATE);
+                        fileobj.write(docWeekNow.toString().getBytes()); //writing to file
+                        fileobj.close(); //File closed
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        docWeekNext = Jsoup.connect(urlWeekNext)
+                                .header("Authorization", "Basic " + acToken)
+                                .header("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.3")
+                                .get();
+
+                        FileOutputStream fileobj = openFileOutput("nextWeekFile.html", Context.MODE_PRIVATE);
+                        fileobj.write(docWeekNext.toString().getBytes()); //writing to file
+                        fileobj.close(); //File closed
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    websiteReloadTime = System.currentTimeMillis();
+                }
+            };
+            thread.start();
+        } else {
+            return;
+        }
+    }
+
+    public boolean isInternetAvailable() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName("google.com");
+            return !ipAddr.equals("");
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // Method to create custom toasts.
+    public void customToast(String toastText, Toast toast) {
         ViewGroup vGroup = findViewById((R.id.custom_toast1));
 
         LayoutInflater inflater = getLayoutInflater();
@@ -226,25 +266,4 @@ public class StundenplanActivity extends AppCompatActivity {
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
     }
-
-    //TODO junge du kleiner Lappen lern jetzt mal wie jsoup geht damit du die html datei kriegen kannst
-   /* private void getWebsite() {
-       Document doc = null;
-        try {
-            doc = Jsoup.connect("https://web.gymnasium-nippes.de/~autolog/schueler/ ").get();
-
-
-            String title = doc.title();
-        } catch (IOException e) {
-
-        }
-
-
-    } */
-
-
-
-
-
-
 }

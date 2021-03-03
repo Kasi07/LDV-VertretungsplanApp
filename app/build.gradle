@@ -27,6 +27,10 @@ android {
     }
 }
 
+repositories{
+    mavenCentral()
+}
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -39,5 +43,6 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.10.1'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.muddzdev:styleabletoast:2.2.4'
-
+    implementation 'org.jsoup:jsoup:1.10.1'
+    implementation 'commons-io:commons-io:+'
 }

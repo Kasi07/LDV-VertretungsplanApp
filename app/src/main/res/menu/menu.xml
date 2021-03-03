@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/letzteWoche"
+        android:id="@+id/jetzigeWoche"
         android:icon="@drawable/backarrow"
         android:title="Voherige Woche"
         app:showAsAction="ifRoom" />

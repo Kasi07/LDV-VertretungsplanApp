@@ -28,6 +28,4 @@ public class SplashActivity extends AppCompatActivity {
         },splashscreen_timeout);
 
     }
-
-
 }
