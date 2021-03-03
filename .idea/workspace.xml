@@ -25,17 +25,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79390c60-c096-4407-a7f4-a3e9d4026527" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/Datum.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/Datum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/StundenplanActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/StundenplanActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_2_API_25]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -157,5 +154,9 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="500" y="205" key="FileChooserDialogImpl/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1613319416378" />
+    <state x="649" y="308" key="git4idea.merge.GitPullDialog" timestamp="1614281403409">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="649" y="308" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1614281403409" />
   </component>
 </project>
