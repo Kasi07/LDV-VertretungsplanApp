@@ -29,22 +29,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79390c60-c096-4407-a7f4-a3e9d4026527" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/Datum.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/Datum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/SplashActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/SplashActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/StundenplanActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/StundenplanActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_3a_API_30_x86]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -63,8 +56,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_3a_API_30_x86" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-02-15T19:12:54.753Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Galaxy_Nexus_API_30" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-03-02T22:22:29.625Z" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -169,30 +162,30 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="0" y="195" key="#Console/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1614636960777" />
-    <state x="92" y="92" width="1256" height="716" key="AVDManager" timestamp="1614167885344">
+    <state x="92" y="92" width="1256" height="716" key="AVDManager" timestamp="1614723875783">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="92" y="92" width="1256" height="716" key="AVDManager/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1614167885344" />
+    <state x="92" y="92" width="1256" height="716" key="AVDManager/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1614723875783" />
     <state x="500" y="205" key="FileChooserDialogImpl" timestamp="1613319416378">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="500" y="205" key="FileChooserDialogImpl/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1613319416378" />
-    <state width="1397" height="369" key="GridCell.Tab.0.bottom" timestamp="1614641011134">
+    <state width="1397" height="235" key="GridCell.Tab.0.bottom" timestamp="1614723873448">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1397" height="369" key="GridCell.Tab.0.bottom/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1614641011134" />
-    <state width="1397" height="369" key="GridCell.Tab.0.center" timestamp="1614641011134">
+    <state width="1397" height="235" key="GridCell.Tab.0.bottom/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1614723873448" />
+    <state width="1397" height="235" key="GridCell.Tab.0.center" timestamp="1614723873447">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1397" height="369" key="GridCell.Tab.0.center/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1614641011134" />
-    <state width="1397" height="369" key="GridCell.Tab.0.left" timestamp="1614641011134">
+    <state width="1397" height="235" key="GridCell.Tab.0.center/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1614723873447" />
+    <state width="1397" height="235" key="GridCell.Tab.0.left" timestamp="1614723873447">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1397" height="369" key="GridCell.Tab.0.left/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1614641011134" />
-    <state width="1397" height="369" key="GridCell.Tab.0.right" timestamp="1614641011134">
+    <state width="1397" height="235" key="GridCell.Tab.0.left/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1614723873447" />
+    <state width="1397" height="235" key="GridCell.Tab.0.right" timestamp="1614723873447">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1397" height="369" key="GridCell.Tab.0.right/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1614641011134" />
+    <state width="1397" height="235" key="GridCell.Tab.0.right/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1614723873447" />
     <state x="221" y="94" key="SettingsEditor" timestamp="1614332744207">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

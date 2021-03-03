@@ -52,7 +52,6 @@ public class StundenplanActivity extends AppCompatActivity {
 
     private long websiteReloadTime = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -124,7 +123,7 @@ public class StundenplanActivity extends AppCompatActivity {
 
             case R.id.websiteAktualisieren:
                 WebsiteLaden();
-                // WebsiteZeigen(3);
+                WebsiteZeigen(3);
 
                 if (toast1.getView().getWindowVisibility() == View.VISIBLE) {
                     toast1.cancel();
@@ -147,21 +146,7 @@ public class StundenplanActivity extends AppCompatActivity {
         settings.setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
 
-        FileInputStream fis = null;
-        try {
-            if(url == 1) {
-                fis = openFileInput("thisWeekFile.html");
-            } else if(url == 2) {
-                fis = openFileInput("nextWeekFile.html");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        Scanner scanner = new Scanner(fis);
-        scanner.useDelimiter("\\Z");
-        String content = scanner.next();
-        scanner.close();
+        String content = loadFile(url);
 
         if (url != 3) {lastUrl = url;}
 
@@ -174,6 +159,28 @@ public class StundenplanActivity extends AppCompatActivity {
         } else {
             return;
         }
+    }
+
+    FileInputStream fis = null;
+    Scanner scanner;
+
+    private String loadFile(int type) {
+        try {
+            if (type == 1) {
+                fis = openFileInput("thisWeekFile.html");
+            } else if (type == 2) {
+                fis = openFileInput("nextWeekFile.html");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        scanner = new Scanner(fis);
+        scanner.useDelimiter("\\Z");
+        String content = scanner.next();
+        scanner.close();
+
+        return content;
     }
 
     private void WebsiteLaden() {
@@ -227,7 +234,6 @@ public class StundenplanActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     websiteReloadTime = System.currentTimeMillis();
-
                 }
             };
             thread.start();
