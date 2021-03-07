@@ -27,7 +27,7 @@ public class Datum {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
 
-        int kalenderwoche = c.get(GregorianCalendar.WEEK_OF_YEAR);
+        int kalenderwoche = c.get(GregorianCalendar.WEEK_OF_YEAR) - 1;
         return kalenderwoche;
 
     }

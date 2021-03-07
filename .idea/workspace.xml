@@ -5,6 +5,10 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -26,17 +30,26 @@
   <component name="ChangeListManager">
     <list default="true" id="79390c60-c096-4407-a7f4-a3e9d4026527" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/Datum.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/Datum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/StundenplanActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/dde/gymnasiumnippes/vertretungsplan/StundenplanActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Pixel_2_API_25]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -150,10 +163,34 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="92" y="92" width="1736" height="856" key="AVDManager" timestamp="1614768629454">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1614768629454" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1615123674850">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1615123674850" />
     <state x="500" y="205" key="FileChooserDialogImpl" timestamp="1613319416378">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="500" y="205" key="FileChooserDialogImpl/0.0.1440.900/1440.-128.1280.1024@0.0.1440.900" timestamp="1613319416378" />
+    <state width="1877" height="239" key="GridCell.Tab.0.bottom" timestamp="1615126787084">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="239" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1615126787084" />
+    <state width="1877" height="239" key="GridCell.Tab.0.center" timestamp="1615126787084">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="239" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1615126787084" />
+    <state width="1877" height="239" key="GridCell.Tab.0.left" timestamp="1615126787083">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="239" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1615126787083" />
+    <state width="1877" height="239" key="GridCell.Tab.0.right" timestamp="1615126787084">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="239" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1615126787084" />
     <state x="649" y="308" key="git4idea.merge.GitPullDialog" timestamp="1614281403409">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

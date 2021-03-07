@@ -18,24 +18,18 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetAddress;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import org.apache.commons.io.FileUtils;
-import org.jsoup.*;
-import org.jsoup.nodes.Document;
-
 import static dde.gymnasiumnippes.vertretungsplan.MainActivity.currentname;
 import static dde.gymnasiumnippes.vertretungsplan.MainActivity.namen;
+
 
 public class StundenplanActivity extends AppCompatActivity {
 
@@ -49,6 +43,7 @@ public class StundenplanActivity extends AppCompatActivity {
     Button dieseWoche;
     Button aktualisieren;
     Toast toast1;
+
 
     private long websiteReloadTime = 0;
 
@@ -75,6 +70,8 @@ public class StundenplanActivity extends AppCompatActivity {
 
         WebsiteLaden();
         WebsiteZeigen(1);
+        //customToast(Datum.KalenderwocheJetztURL() , toast1);
+        //toast1.show();
     }
 
 
@@ -148,7 +145,9 @@ public class StundenplanActivity extends AppCompatActivity {
 
         String content = loadFile(url);
 
-        if (url != 3) {lastUrl = url;}
+        if (url != 3) {
+            lastUrl = url;
+        }
 
         if (url == 1) {
             webView.loadDataWithBaseURL(null, content, "text/html", "iso-8859-1", null);
@@ -165,6 +164,7 @@ public class StundenplanActivity extends AppCompatActivity {
     Scanner scanner;
 
     private String loadFile(int type) {
+
         try {
             if (type == 1) {
                 fis = openFileInput("thisWeekFile.html");
@@ -180,12 +180,13 @@ public class StundenplanActivity extends AppCompatActivity {
         String content = scanner.next();
         scanner.close();
 
+
         return content;
     }
 
     private void WebsiteLaden() {
         if (websiteReloadTime + 60000 <= System.currentTimeMillis() && isInternetAvailable()) {
-            Thread thread = new Thread() {
+            Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
 
@@ -235,12 +236,18 @@ public class StundenplanActivity extends AppCompatActivity {
                     }
                     websiteReloadTime = System.currentTimeMillis();
                 }
-            };
+            });
             thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } else {
             return;
         }
     }
+
 
     public boolean isInternetAvailable() {
         try {
