@@ -19,18 +19,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetAddress;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import org.apache.commons.io.FileUtils;
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
 
@@ -57,7 +52,6 @@ public class StundenplanActivity extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        toast1 = new Toast(getApplicationContext());
         setContentView(R.layout.stundenplan_activity);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,8 +67,8 @@ public class StundenplanActivity extends AppCompatActivity {
 
         meinSchueler = new Schueler();
 
-        WebsiteLaden();
-        WebsiteZeigen(1);
+        loadWebsite();
+        showWebsite(1);
     }
 
 
@@ -95,7 +89,7 @@ public class StundenplanActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.jetzigeWoche:
-                WebsiteZeigen(1);
+                showWebsite(1);
 
                 if (toast1.getView().getWindowVisibility() == View.VISIBLE) {
                     toast1.cancel();
@@ -109,7 +103,7 @@ public class StundenplanActivity extends AppCompatActivity {
 
             case R.id.naechsteWoche:
                 meinSchueler = new Schueler();
-                WebsiteZeigen(2);
+                showWebsite(2);
 
                 if (toast1.getView().getWindowVisibility() == View.VISIBLE) {
                     toast1.cancel();
@@ -122,8 +116,8 @@ public class StundenplanActivity extends AppCompatActivity {
                 return true;
 
             case R.id.websiteAktualisieren:
-                WebsiteLaden();
-                WebsiteZeigen(3);
+                loadWebsite();
+                showWebsite(3);
 
                 if (toast1.getView().getWindowVisibility() == View.VISIBLE) {
                     toast1.cancel();
@@ -139,7 +133,7 @@ public class StundenplanActivity extends AppCompatActivity {
 
     private int lastUrl;
 
-    public void WebsiteZeigen(int url) {
+    public void showWebsite(int url) {
         WebView webView = findViewById(R.id.webview);
         WebSettings settings = webView.getSettings();
         settings.setDisplayZoomControls(true);
@@ -147,35 +141,41 @@ public class StundenplanActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
 
         String content = loadFile(url);
+        if (url != 3) {
+            lastUrl = url;
+        }
 
-        if (url != 3) {lastUrl = url;}
-
+        //checks if this weeks Website should be shown
         if (url == 1) {
+            //shows this weeks Website
             webView.loadDataWithBaseURL(null, content, "text/html", "iso-8859-1", null);
+            //checks if next weeks Website should be shown
         } else if (url == 2) {
+            //shows next weeks Website
             webView.loadDataWithBaseURL(null, content, "text/html", "iso-8859-1", null);
+            //checks if Website should be reloaded
         } else if (url == 3) {
-            WebsiteZeigen(lastUrl);
+            //reloads current shown Website
+            showWebsite(lastUrl);
         } else {
             return;
         }
     }
 
-    FileInputStream fis = null;
-    Scanner scanner;
-
     private String loadFile(int type) {
+        FileInputStream fis = null;
         try {
             if (type == 1) {
                 fis = openFileInput("thisWeekFile.html");
             } else if (type == 2) {
                 fis = openFileInput("nextWeekFile.html");
             }
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
+            System.out.println("Data not available!");
         }
 
-        scanner = new Scanner(fis);
+        Scanner scanner = new Scanner(fis);
         scanner.useDelimiter("\\Z");
         String content = scanner.next();
         scanner.close();
@@ -183,37 +183,38 @@ public class StundenplanActivity extends AppCompatActivity {
         return content;
     }
 
-    private void WebsiteLaden() {
+    private void loadWebsite() {
+        //only execute every 60 seconds and if device has internet connection
         if (websiteReloadTime + 60000 <= System.currentTimeMillis() && isInternetAvailable()) {
+            //creates new Thread for downloading the Website
             Thread thread = new Thread() {
                 @Override
                 public void run() {
+                    Document docWeekNext;
+                    Document docWeekNow;
 
-                    // URL for the current Week
+                    //URL for this Week
                     String urlWeekNow = "https://web.gymnasium-nippes.de/~autolog/schueler/"
                             + Datum.KalenderwocheJetztURL()
                             + "/s/"
                             + meinSchueler.Schuelerid[Index]
                             + ".htm";
-                    // URL for the next Week
+                    //URL for next Week
                     String urlWeekNext = "https://web.gymnasium-nippes.de/~autolog/schueler/"
                             + Datum.KalenderwocheNextURL()
                             + "/s/"
                             + meinSchueler.Schuelerid[Index]
                             + ".htm";
-
-                    final String acToken = "aG9sbGFuZDpmYXJmcm9taGhvbWU=";
-                    Document docWeekNext;
-
-
-                    Document docWeekNow;
+                    final String acToken = "aG9sbGFuZDpmYXJmcm9taGhvbWU="; //Sets username:password for Website login
                     try {
+                        //downloads the timetable for this week
                         docWeekNow = Jsoup.connect(urlWeekNow)
                                 .header("Authorization", "Basic " + acToken)
                                 .header("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.3")
                                 .get();
 
-                        FileOutputStream fileobj = openFileOutput("thisWeekFile.html", Context.MODE_PRIVATE);
+                        // Writes timetable to filesystem
+                        FileOutputStream fileobj = openFileOutput("thisWeekFile.html", Context.MODE_PRIVATE); //opens File
                         fileobj.write(docWeekNow.toString().getBytes()); //writing to file
                         fileobj.close(); //File closed
 
@@ -221,15 +222,16 @@ public class StundenplanActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     try {
+                        //downloads the timetable for next week
                         docWeekNext = Jsoup.connect(urlWeekNext)
                                 .header("Authorization", "Basic " + acToken)
                                 .header("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.3")
                                 .get();
 
-                        FileOutputStream fileobj = openFileOutput("nextWeekFile.html", Context.MODE_PRIVATE);
+                        // writes timetable to filesystem
+                        FileOutputStream fileobj = openFileOutput("nextWeekFile.html", Context.MODE_PRIVATE); //opens File
                         fileobj.write(docWeekNext.toString().getBytes()); //writing to file
                         fileobj.close(); //File closed
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
