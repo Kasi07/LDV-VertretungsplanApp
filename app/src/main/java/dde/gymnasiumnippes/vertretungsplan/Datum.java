@@ -1,53 +1,41 @@
 package dde.gymnasiumnippes.vertretungsplan;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 
 public class Datum {
 
-    private int kalenderwoche;
-    private String kalenderwocheJetzt;
-    private String kalenderwocheNext;
+    private int kalenderWoche;
+    private String kalenderWocheJetzt;
+    private String kalenderWocheNext;
 
     public Datum() {
-        getKalenderwoche();
+        getKalenderWoche();
     }
 
 
-    public int getKalenderwoche() {
-        String inputFormat = "yyyyMMdd";
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat(inputFormat);
-        Date date = new Date();
-        TimeZone.getDefault();
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-
-        int kalenderwoche = c.get(GregorianCalendar.WEEK_OF_YEAR) - 1;
-        return kalenderwoche;
-
+    public int getKalenderWoche() {
+        Calendar calendar = Calendar.getInstance();
+        kalenderWoche = calendar.get(Calendar. WEEK_OF_YEAR);
+        return kalenderWoche;
     }
 
     public String KalenderwocheJetztURL() {
-        // Falls die Kalenderwoche unter 10 ist, muss eine Null vorgestellt werden.
-        if (getKalenderwoche() < 10) {
-            kalenderwocheJetzt = "0" + getKalenderwoche();
+        //In case the number of the week is under 10 it will be added a 0 before
+        if (getKalenderWoche() < 10) {
+            kalenderWocheJetzt = "0" + getKalenderWoche();
         } else {
-            kalenderwocheJetzt = Integer.toString(getKalenderwoche());
+            kalenderWocheJetzt = Integer.toString(getKalenderWoche());
         }
-        return kalenderwocheJetzt;
+        return kalenderWocheJetzt;
     }
 
     public String KalenderwocheNextURL() {
-        if(getKalenderwoche() < 9) {
-            kalenderwocheNext = "0" + (getKalenderwoche() + 1);
+        if(getKalenderWoche() < 9) {
+            kalenderWocheNext = "0" + (getKalenderWoche() + 1);
         } else {
-            kalenderwocheNext = Integer.toString(getKalenderwoche() + 1);
+            kalenderWocheNext = Integer.toString(getKalenderWoche() + 1);
         }
-        return kalenderwocheNext;
+        return kalenderWocheNext;
     }
 }

@@ -139,9 +139,10 @@ public class StundenplanActivity extends AppCompatActivity {
         settings.setDisplayZoomControls(true);
         settings.setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
+        String content = null;
 
-        String content = loadFile(url);
         if (url != 3) {
+            content = loadFile(url);
             lastUrl = url;
         }
 
@@ -186,7 +187,7 @@ public class StundenplanActivity extends AppCompatActivity {
     private void loadWebsite() {
         //only execute every 60 seconds
         //TODO and if device has internet connection
-        if (websiteReloadTime + 60000 <= System.currentTimeMillis() /*&& isInternetAvailable()*/) {
+        if (websiteReloadTime + 10000 <= System.currentTimeMillis() /*&& isInternetAvailable()*/) {
             //creates new Thread for downloading the Website
             Thread thread = new Thread() {
                 @Override
@@ -240,7 +241,17 @@ public class StundenplanActivity extends AppCompatActivity {
                 }
             };
             thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } else {
+            if (toast1.getView().getWindowVisibility() == View.VISIBLE) {
+                toast1.cancel();
+            }
+            customToast("Mach langsamer!", toast1);
+            toast1.show();
             return;
         }
     }
